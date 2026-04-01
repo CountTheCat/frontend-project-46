@@ -21,28 +21,28 @@ export default function stylish(tree, depth = 0) {
     const key = node.key
     
     switch (node.type) {
-      case 'nested':
-        lines.push(`${indent}    ${key}: {`)
-        lines.push(stylish(node.children, depth + 1))
-        lines.push(`${indent}    }`)
-        break
+    case 'nested':
+      lines.push(`${indent}    ${key}: {`)
+      lines.push(stylish(node.children, depth + 1))
+      lines.push(`${indent}    }`)
+      break
       
-      case 'added':
-        lines.push(`${indent}  + ${key}: ${stringify(node.value, depth + 1)}`)
-        break
+    case 'added':
+      lines.push(`${indent}  + ${key}: ${stringify(node.value, depth + 1)}`)
+      break
       
-      case 'removed':
-        lines.push(`${indent}  - ${key}: ${stringify(node.value, depth + 1)}`)
-        break
+    case 'removed':
+      lines.push(`${indent}  - ${key}: ${stringify(node.value, depth + 1)}`)
+      break
       
-      case 'changed':
-        lines.push(`${indent}  - ${key}: ${stringify(node.oldValue, depth + 1)}`)
-        lines.push(`${indent}  + ${key}: ${stringify(node.newValue, depth + 1)}`)
-        break
+    case 'changed':
+      lines.push(`${indent}  - ${key}: ${stringify(node.oldValue, depth + 1)}`)
+      lines.push(`${indent}  + ${key}: ${stringify(node.newValue, depth + 1)}`)
+      break
       
-      default:
-        lines.push(`${indent}    ${key}: ${stringify(node.value, depth + 1)}`)
-        break
+    default:
+      lines.push(`${indent}    ${key}: ${stringify(node.value, depth + 1)}`)
+      break
     }
   }
   

@@ -13,7 +13,7 @@ export default function buildTree(obj1, obj2) {
       return {
         key,
         type: 'removed',
-        value: value1,
+        value: value1
       }
     }
     
@@ -21,7 +21,7 @@ export default function buildTree(obj1, obj2) {
       return {
         key,
         type: 'added',
-        value: value2,
+        value: value2
       }
     }
     
@@ -29,7 +29,7 @@ export default function buildTree(obj1, obj2) {
       return {
         key,
         type: 'nested',
-        children: buildTree(value1, value2),
+        children: buildTree(value1, value2)
       }
     }
     
@@ -38,14 +38,14 @@ export default function buildTree(obj1, obj2) {
         key,
         type: 'changed',
         oldValue: value1,
-        newValue: value2,
+        newValue: value2
       }
     }
     
     return {
       key,
       type: 'unchanged',
-      value: value1,
+      value: value1
     }
   })
 }
