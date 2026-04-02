@@ -1,4 +1,5 @@
 node_modules
 .log
+.cast
 coverage
 .DS_Store
