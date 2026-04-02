@@ -12,9 +12,9 @@ describe('gendiff', () => {
   test('compares flat json files', () => {
     const filepath1 = getFixturePath('file1.json')
     const filepath2 = getFixturePath('file2.json')
-    
+
     const result = genDiff(filepath1, filepath2)
-    
+
     const expected = `{
   - follow: false
     host: hexlet.io
@@ -23,16 +23,16 @@ describe('gendiff', () => {
   + timeout: 20
   + verbose: true
 }`
-    
+
     expect(result).toBe(expected)
   })
-  
+
   test('compares flat yaml files', () => {
     const filepath1 = getFixturePath('file1.yml')
     const filepath2 = getFixturePath('file2.yml')
-    
+
     const result = genDiff(filepath1, filepath2)
-    
+
     const expected = `{
   - follow: false
     host: hexlet.io
@@ -41,16 +41,16 @@ describe('gendiff', () => {
   + timeout: 20
   + verbose: true
 }`
-    
+
     expect(result).toBe(expected)
   })
-  
+
   test('compares nested json files', () => {
     const filepath1 = getFixturePath('file1_nested.json')
     const filepath2 = getFixturePath('file2_nested.json')
-  
+
     const result = genDiff(filepath1, filepath2)
-  
+
     const expected = `{
     common: {
       + follow: false
@@ -95,16 +95,16 @@ describe('gendiff', () => {
         fee: 100500
     }
 }`
-  
+
     expect(result).toBe(expected)
   })
 
   test('compares nested json files in plain format', () => {
     const filepath1 = getFixturePath('file1_nested.json')
     const filepath2 = getFixturePath('file2_nested.json')
-  
+
     const result = genDiff(filepath1, filepath2, 'plain')
-  
+
     const expected = `Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to null
@@ -116,21 +116,21 @@ Property 'group1.baz' was updated. From 'bas' to 'bars'
 Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
 Property 'group3' was added with value: [complex value]`
-  
+
     expect(result).toBe(expected)
   })
 
   test('compares flat json files in plain format', () => {
     const filepath1 = getFixturePath('file1.json')
     const filepath2 = getFixturePath('file2.json')
-  
+
     const result = genDiff(filepath1, filepath2, 'plain')
-  
+
     const expected = `Property 'follow' was removed
 Property 'proxy' was removed
 Property 'timeout' was updated. From 50 to 20
 Property 'verbose' was added with value: true`
-  
+
     expect(result).toBe(expected)
   })
 })
@@ -138,13 +138,13 @@ Property 'verbose' was added with value: true`
 test('compares nested json files in json format', () => {
   const filepath1 = getFixturePath('file1_nested.json')
   const filepath2 = getFixturePath('file2_nested.json')
-  
+
   const result = genDiff(filepath1, filepath2, 'json')
   const parsed = JSON.parse(result)
-  
+
   // Проверяем структуру и ключи
   expect(Array.isArray(parsed)).toBe(true)
-  
+
   // Проверяем несколько конкретных узлов
   const addedNode = parsed.find(node => node.key === 'common.follow')
   expect(addedNode).toEqual({
@@ -152,14 +152,14 @@ test('compares nested json files in json format', () => {
     type: 'added',
     value: false
   })
-  
+
   const removedNode = parsed.find(node => node.key === 'common.setting2')
   expect(removedNode).toEqual({
     key: 'common.setting2',
     type: 'removed',
     value: 200
   })
-  
+
   const changedNode = parsed.find(node => node.key === 'common.setting3')
   expect(changedNode).toEqual({
     key: 'common.setting3',
@@ -167,7 +167,7 @@ test('compares nested json files in json format', () => {
     oldValue: true,
     newValue: null
   })
-  
+
   const nestedChangedNode = parsed.find(node => node.key === 'common.setting6.doge.wow')
   expect(nestedChangedNode).toEqual({
     key: 'common.setting6.doge.wow',
@@ -180,19 +180,19 @@ test('compares nested json files in json format', () => {
 test('compares flat json files in json format', () => {
   const filepath1 = getFixturePath('file1.json')
   const filepath2 = getFixturePath('file2.json')
-  
+
   const result = genDiff(filepath1, filepath2, 'json')
   const parsed = JSON.parse(result)
-  
+
   expect(Array.isArray(parsed)).toBe(true)
   expect(parsed).toHaveLength(4)
-  
+
   const removedKeys = parsed.filter(n => n.type === 'removed').map(n => n.key)
   expect(removedKeys).toEqual(['follow', 'proxy'])
-  
+
   const addedKeys = parsed.filter(n => n.type === 'added').map(n => n.key)
   expect(addedKeys).toEqual(['verbose'])
-  
+
   const changedNode = parsed.find(n => n.key === 'timeout')
   expect(changedNode).toEqual({
     key: 'timeout',
@@ -205,16 +205,16 @@ test('compares flat json files in json format', () => {
 test('compares flat yaml files in json format', () => {
   const filepath1 = getFixturePath('file1.yml')
   const filepath2 = getFixturePath('file2.yml')
-  
+
   const result = genDiff(filepath1, filepath2, 'json')
   const parsed = JSON.parse(result)
-  
+
   expect(Array.isArray(parsed)).toBe(true)
   expect(parsed).toHaveLength(4)
-  
+
   const removedKeys = parsed.filter(n => n.type === 'removed').map(n => n.key)
   expect(removedKeys).toEqual(['follow', 'proxy'])
-  
+
   const addedKeys = parsed.filter(n => n.type === 'added').map(n => n.key)
   expect(addedKeys).toEqual(['verbose'])
 })

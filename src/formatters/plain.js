@@ -26,32 +26,32 @@ const formatValue = (value) => {
 
 export default function plain(tree, parentPath = '') {
   const lines = []
-  
+
   for (const node of tree) {
     const fullPath = buildPath(parentPath, node.key)
-    
+
     switch (node.type) {
-    case 'nested':
-      lines.push(plain(node.children, fullPath))
-      break
-      
-    case 'added':
-      lines.push(`Property '${fullPath}' was added with value: ${stringify(node.value)}`)
-      break
-      
-    case 'removed':
-      lines.push(`Property '${fullPath}' was removed`)
-      break
-      
-    case 'changed':
-      lines.push(`Property '${fullPath}' was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`)
-      break
-      
-    default:
+      case 'nested':
+        lines.push(plain(node.children, fullPath))
+        break
+
+      case 'added':
+        lines.push(`Property '${fullPath}' was added with value: ${stringify(node.value)}`)
+        break
+
+      case 'removed':
+        lines.push(`Property '${fullPath}' was removed`)
+        break
+
+      case 'changed':
+        lines.push(`Property '${fullPath}' was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`)
+        break
+
+      default:
       // unchanged — пропускаем
-      break
+        break
     }
   }
-  
+
   return lines.filter(line => line !== '').join('\n')
 }
