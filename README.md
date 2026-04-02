@@ -5,4 +5,4 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=CountTheCat_frontend-project-46&metric=coverage)](https://sonarcloud.io/summary/new_code?id=CountTheCat_frontend-project-46)
 
 ## Пример использования
-[![asciicast](https://asciinema.org/a/KIhtYcpjuN5ojmwo.svg)](https://asciinema.org/a/KIhtYcpjuN5ojmwo)
+[![asciicast](https://asciinema.org/a/s2qQ9CjFJTzX93eC.svg)](https://asciinema.org/a/s2qQ9CjFJTzX93eC)

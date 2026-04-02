@@ -1,9 +1,11 @@
 import stylish from './formatters/stylish.js'
 import plain from './formatters/plain.js'
+import json from './formatters/json.js'
 
 const formatters = {
   stylish,
-  plain
+  plain,
+  json
 }
 
 export default (format, tree) => {

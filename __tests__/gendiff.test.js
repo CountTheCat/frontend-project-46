@@ -134,3 +134,87 @@ Property 'verbose' was added with value: true`
     expect(result).toBe(expected)
   })
 })
+
+test('compares nested json files in json format', () => {
+  const filepath1 = getFixturePath('file1_nested.json')
+  const filepath2 = getFixturePath('file2_nested.json')
+  
+  const result = genDiff(filepath1, filepath2, 'json')
+  const parsed = JSON.parse(result)
+  
+  // Проверяем структуру и ключи
+  expect(Array.isArray(parsed)).toBe(true)
+  
+  // Проверяем несколько конкретных узлов
+  const addedNode = parsed.find(node => node.key === 'common.follow')
+  expect(addedNode).toEqual({
+    key: 'common.follow',
+    type: 'added',
+    value: false
+  })
+  
+  const removedNode = parsed.find(node => node.key === 'common.setting2')
+  expect(removedNode).toEqual({
+    key: 'common.setting2',
+    type: 'removed',
+    value: 200
+  })
+  
+  const changedNode = parsed.find(node => node.key === 'common.setting3')
+  expect(changedNode).toEqual({
+    key: 'common.setting3',
+    type: 'changed',
+    oldValue: true,
+    newValue: null
+  })
+  
+  const nestedChangedNode = parsed.find(node => node.key === 'common.setting6.doge.wow')
+  expect(nestedChangedNode).toEqual({
+    key: 'common.setting6.doge.wow',
+    type: 'changed',
+    oldValue: '',
+    newValue: 'so much'
+  })
+})
+
+test('compares flat json files in json format', () => {
+  const filepath1 = getFixturePath('file1.json')
+  const filepath2 = getFixturePath('file2.json')
+  
+  const result = genDiff(filepath1, filepath2, 'json')
+  const parsed = JSON.parse(result)
+  
+  expect(Array.isArray(parsed)).toBe(true)
+  expect(parsed).toHaveLength(4)
+  
+  const removedKeys = parsed.filter(n => n.type === 'removed').map(n => n.key)
+  expect(removedKeys).toEqual(['follow', 'proxy'])
+  
+  const addedKeys = parsed.filter(n => n.type === 'added').map(n => n.key)
+  expect(addedKeys).toEqual(['verbose'])
+  
+  const changedNode = parsed.find(n => n.key === 'timeout')
+  expect(changedNode).toEqual({
+    key: 'timeout',
+    type: 'changed',
+    oldValue: 50,
+    newValue: 20
+  })
+})
+
+test('compares flat yaml files in json format', () => {
+  const filepath1 = getFixturePath('file1.yml')
+  const filepath2 = getFixturePath('file2.yml')
+  
+  const result = genDiff(filepath1, filepath2, 'json')
+  const parsed = JSON.parse(result)
+  
+  expect(Array.isArray(parsed)).toBe(true)
+  expect(parsed).toHaveLength(4)
+  
+  const removedKeys = parsed.filter(n => n.type === 'removed').map(n => n.key)
+  expect(removedKeys).toEqual(['follow', 'proxy'])
+  
+  const addedKeys = parsed.filter(n => n.type === 'added').map(n => n.key)
+  expect(addedKeys).toEqual(['verbose'])
+})

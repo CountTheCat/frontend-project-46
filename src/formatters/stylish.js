@@ -40,12 +40,12 @@ export default function stylish(tree, depth = 0) {
       lines.push(`${indent}  + ${key}: ${stringify(node.newValue, depth + 1)}`)
       break
       
-    default: // unchanged
+    default:
       lines.push(`${indent}    ${key}: ${stringify(node.value, depth + 1)}`)
       break
     }
   }
-  
+
   if (depth === 0) {
     return `{\n${lines.join('\n')}\n}`
   }
