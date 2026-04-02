@@ -9,14 +9,14 @@ const processNode = (node, path = '') => {
       return [{
         key: currentPath,
         type: 'added',
-        value: node.value
+        value: node.value,
       }]
 
     case 'removed':
       return [{
         key: currentPath,
         type: 'removed',
-        value: node.value
+        value: node.value,
       }]
 
     case 'changed':
@@ -24,7 +24,7 @@ const processNode = (node, path = '') => {
         key: currentPath,
         type: 'changed',
         oldValue: node.oldValue,
-        newValue: node.newValue
+        newValue: node.newValue,
       }]
 
     default:

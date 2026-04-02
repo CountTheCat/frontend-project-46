@@ -6,7 +6,7 @@ import genDiff from '../index.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filename)
+const getFixturePath = filename => join(__dirname, '..', '__fixtures__', filename)
 
 describe('gendiff', () => {
   test('compares flat json files', () => {
@@ -150,14 +150,14 @@ test('compares nested json files in json format', () => {
   expect(addedNode).toEqual({
     key: 'common.follow',
     type: 'added',
-    value: false
+    value: false,
   })
 
   const removedNode = parsed.find(node => node.key === 'common.setting2')
   expect(removedNode).toEqual({
     key: 'common.setting2',
     type: 'removed',
-    value: 200
+    value: 200,
   })
 
   const changedNode = parsed.find(node => node.key === 'common.setting3')
@@ -165,7 +165,7 @@ test('compares nested json files in json format', () => {
     key: 'common.setting3',
     type: 'changed',
     oldValue: true,
-    newValue: null
+    newValue: null,
   })
 
   const nestedChangedNode = parsed.find(node => node.key === 'common.setting6.doge.wow')
@@ -173,7 +173,7 @@ test('compares nested json files in json format', () => {
     key: 'common.setting6.doge.wow',
     type: 'changed',
     oldValue: '',
-    newValue: 'so much'
+    newValue: 'so much',
   })
 })
 
@@ -198,7 +198,7 @@ test('compares flat json files in json format', () => {
     key: 'timeout',
     type: 'changed',
     oldValue: 50,
-    newValue: 20
+    newValue: 20,
   })
 })
 

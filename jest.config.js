@@ -14,7 +14,7 @@ export default {
     '!**/__tests__/**',
     '!**/__fixtures__/**',
     '!**/node_modules/**',
-    '!**/bin/**'
+    '!**/bin/**',
   ],
-  transform: {}
+  transform: {},
 }

@@ -5,7 +5,7 @@ import json from './formatters/json.js'
 const formatters = {
   stylish,
   plain,
-  json
+  json,
 }
 
 export default (format, tree) => {
