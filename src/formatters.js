@@ -2,15 +2,18 @@ import stylish from './formatters/stylish.js'
 import plain from './formatters/plain.js'
 import json from './formatters/json.js'
 
-const formatters = {
-  stylish,
-  plain,
-  json,
-}
-
 export default (format, tree) => {
-  if (!formatters[format]) {
-    throw new Error(`Unsupported format: ${format}`)
+  switch (format) {
+    case 'stylish':
+      return stylish(tree)
+
+    case 'plain':
+      return plain(tree)
+
+    case 'json':
+      return json(tree)
+
+    default:
+      throw new Error(`Unsupported format: ${format}`)
   }
-  return formatters[format](tree)
 }
